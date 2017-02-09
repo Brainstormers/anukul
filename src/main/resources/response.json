@@ -1,0 +1,47 @@
+{
+  "info": {
+    "apiVersion": "1.1",
+    "clientFeatures": [
+      "say",
+      "selector",
+      "composer",
+      "reminder",
+      "show-emails",
+      "show-images",
+      "google-login",
+      "show-urls",
+      "skype",
+      "open-url"
+    ],
+    "clientTime": "2016-08-01T17:04:23.039+05:30",
+    "detectedLanguage": "en",
+    "emotions": [],
+    "input": "hello",
+    "isNewUser": true,
+    "locale": "en",
+    "login": "chrome-demo",
+    "responseTime": 421
+  },
+  "output": [{
+    "actions": {
+      "custom": {},
+      "say": {"text": "Howdy"}
+    },
+    "entities": {
+      "dialoguesInfo": {
+        "dialog": "Extensions",
+        "dialog_id": "61",
+        "forced": false,
+        "initiative": false,
+        "match_id": "209998",
+        "matchscore": "1.77",
+        "response_id": "209995"
+      },
+      "input": "hello",
+      "locale": "en"
+    },
+    "handler": "Dialogues",
+    "responseTime": 394,
+    "results": {}
+  }]
+}
