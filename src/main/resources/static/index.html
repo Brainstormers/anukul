@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Anukul V1.0</title>
+        <meta name="keywords" content="Jeannie for Chrome,conversational search,siri for browser,siri in browser,siri browser,browser siri,siri for chrome,jeannie for browser,jeannie for chrome"/>
+        <meta name="viewport" content="width=360, initial-scale=0.5" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script language="JavaScript" type="text/javascript">
+        </script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <!-- handle browser URL + history -->
+        <script defer type="text/javascript" src="js/jquery.history.js"></script>
+        <!-- image drop down -->
+        <script defer type="text/javascript" src="dd/jquery.dd.js"></script>
+        <!-- for google login -->
+        <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+        <!-- for easy date parsing and formatting -->
+        <script defer type="text/javascript" src="js/moment.min.js"></script>
+        <script type="text/javascript" src="js/common.js?v=2"></script>
+        <link rel="stylesheet" type="text/css" href="dd/dd.css" />
+        <link rel="stylesheet" type="text/css" href="css/my.css?v=2" />
+        <script type="text/javascript" src="js/speech_rec.js?v=4"></script>
+        <script type="text/javascript" src="js/tts.js?v=3"></script>
+        <script type="text/javascript" src="js/googlehandling.js"></script>
+        <script type="text/javascript" src="js/myui.js?v=8"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="google_div">
+                <button id="google_login">Login</button>
+            </div>
+            <div id="main">
+                <div>
+                   <img id="logo" src="img/anukul-v1.png" border="1" alt="Anukul V1.0 Chrome"/>  
+                </div>
+                <div id="speaker">
+                    <div id="toggleSpeach">
+                        <img id="speachimage" alt="pause" src="img/control-pause.png"/>
+                    </div>
+                    <!-- div id="avatar"-->
+                        <!-- div id="oddcastscript">
+                        	<img id="speachimage" alt="Anukul" src="img/mqdefault.jpg"/>
+                        </div-->
+                        <!-- script language="JavaScript" type="text/javascript"
+                        src="js/functions.js?acc=2823212&js=1"></script-->
+                        <!-- script language="JavaScript" type="text/javascript">
+                            try {
+                                AC_VHost_Embed(2823212,220,320,'',1,1, 2242868, 0,0,0,'80e2f38283eb610420bb718bc720e98c',9);
+                            } catch(ex) {}                            
+                        </script-->
+                    <!-- /div-->
+                    <!-- div class="clear"></div-->
+                </div>
+                <div id="header">
+                    <form id="myform" >
+                        <input id="myinput"
+                               class="left"
+                               type="text" name="input" value=""
+                               autocomplete="off" maxlength="200"
+                               placeholder="Enter your question or use microphone"
+                               onwebkitspeechchange="mysubmit()"
+                               x-webkit-speech="" />                        
+                        <select id="locale-menu" name="locale" onchange="changeLanguage(this.value)">
+                            <!-- http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 -->
+                            <option value="" title="img/country/.png">Guess</option>
+                            <!-- English -->
+                            <!-- uk -->
+                            <option value="en_GB" title="img/country/gb.png">  </option>
+                            <!-- canada -->
+                            <option value="en_CA" title="img/country/ca.png">  </option>
+                            <!-- australia -->
+                            <option value="en_AU" title="img/country/au.png">  </option>
+                            <!-- us -->
+                            <option value="en" title="img/country/us.png">  </option>
+                            <!-- German -->
+                            <!-- germany -->
+                            <option value="de" title="img/country/de.png">  </option>
+                            <!-- austria -->
+                            <option value="de_AT" title="img/country/at.png">  </option>
+                            <!-- French -->
+                            <option value="fr" title="img/country/fr.png">  </option>                           
+
+                            <!-- now order lexicographical -->
+                            <!-- Arabic -->
+                            <option value="ar" title="img/country/ae.png">  </option>                            
+                            <!-- Catalan 
+                            <option value="" title="img/.png">  </option>
+                            -->
+                            <!-- Chinese -->
+                            <option value="zh_CN" title="img/country/zh_CN.png">  </option>
+                            <!-- Danish -->
+                            <option value="da" title="img/country/dk.png">  </option>
+                            <!-- Dutch -->
+                            <option value="nl" title="img/country/nl.png">  </option>
+                            <!-- Finnish -->
+                            <option value="fi" title="img/country/fi.png">  </option>
+                            <!-- Galician
+                            <option value="" title="img/country_.png">  </option>
+                            -->
+                            <!-- Greek -->
+                            <option value="el" title="img/country/gr.png">  </option>
+                            <!-- Italian -->
+                            <option value="it" title="img/country/it.png">  </option>
+                            <!-- Japanese -->
+                            <option value="ja" title="img/country/ja.png">  </option>
+                            <!-- Korean -->
+                            <option value="ko" title="img/country/kr.png">  </option>
+                            <!-- Norwegian -->
+                            <option value="no" title="img/country/no.png">  </option>
+                            <!-- Portuguese -->
+                            <option value="pt" title="img/country/pt.png">  </option>
+                            <!-- brazil -->
+                            <option value="pt_BR" title="img/country/br.png">  </option>
+                            <!-- Polish -->
+                            <option value="pl" title="img/country/pl.png">  </option>
+                            <!-- Romanian 
+                            <option value="ro" title="img/country/ro.png"></option>
+                            -->
+                            <!-- Russian -->
+                            <option value="ru" title="img/country/ru.png">  </option>
+                            <!-- Spanish -->
+                            <option value="es" title="img/country/es.png">  </option>
+                            <!-- argentinia no voice
+                            <option value="es_AR" title="img/country/ar.png">  </option>
+                            -->
+                            <!-- mexico -->
+                            <option value="es_MX" title="img/country/mx.png">  </option>                            
+                            <!-- Swedish -->
+                            <option value="sv" title="img/country/se.png">  </option>
+                            <!-- Turkish -->
+                            <option value="tr" title="img/country/tr.png">  </option>
+                        </select>
+                    </form>
+                    <div id="inputarea" class="hidden">
+                        <div id="composer-names"></div>
+                        <textarea id="mytextarea"cols="62" rows="8"></textarea>
+                        <div id="cmd-buttons">
+                            <button id="cancelmail">Cancel</button>
+                            <button id="sendmail">Send</button>
+                        </div>
+                        <div id="composer-commands" title="Supported Commands">
+                            <pre>
+clear | remove all
+delete that/it | remove that/it
+press enter
+cancel | cancel that/it | discard
+I said (correction)
+send that/it | finish
+                            </pre>
+                        </div>
+                    </div>
+                    <button id="speechrec_start" class="hidden" onclick="startButton(true)">
+                        <img id="start_img" src="img/mic.png" alt="Start">
+                    </button>                    
+                </div>
+
+                <div class="info">
+                    <p id="info_blocked" class="hidden">Not allowed to access microphone.
+                        Change your settings in chrome://settings/contentExceptions#media-stream</p>                    
+                    <p id="info_denied" class="hidden">Access denied to microphone</p>
+                    <p id="info_no_microphone" class="hidden">No microphone</p>
+                    <!-- Do we need to inform the user about it? -->
+                    <p id="info_no_speech" class="hidden">No speech</p>
+                    <p id="info_unknown" class="hidden">Unknown error. See logs</p>
+                    <p id="info_error_network" class="hidden">Network error</p>
+                    <p id="info_error_aborted" class="hidden">Aborted</p>
+                </div>
+         
+                <div class="clear"></div>
+                <div id="mainOutput"></div>
+            </div>
+        </div>
+        <span id="sound_dummy"/>
+    </body>
+</html>

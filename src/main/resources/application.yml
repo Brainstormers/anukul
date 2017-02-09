@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: cloud
+  aop:
+    proxy-target-class: true
+  application:
+    name: anukul
+  
+info:
+  component: Anukul V1.0
+  
+endpoints:
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+fb: 
+ profile: 
+  link: 'https://graph.facebook.com/v2.6/SENDER_ID?access_token='
+ page: 
+  token: 'FAGE TOKEN'
+ verify: 
+  token: 'VERIFY TOKEN'
+ message: 
+  url: 'https://graph.facebook.com/v2.6/me/messages?access_token='
+    
+logging:
+  level:
+    ROOT: 'ERROR'
+    org.springframework.web: 'ERROR'
+    org.springframework.cloud: 'ERROR'
+    org.springframework.boot: 'ERROR'
+    org.springframework: 'ERROR'
+    
+ 
