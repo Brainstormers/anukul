@@ -152,7 +152,7 @@ public class AIMLProcessor {
      * @return              bot's response.
      */
     public static String respond(String input, String that, String topic, Chat chatSession) {
-        if (checkForRepeat(input, chatSession) > 0) return "Repeat! No issue :) /n" + respond(input, that, topic, chatSession, 0);
+        if (checkForRepeat(input, chatSession) > 0) return respond(input, that, topic, chatSession, 0);
         else {
             return respond(input, that, topic, chatSession, 0);
         }

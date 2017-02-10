@@ -19,9 +19,9 @@ fb:
  profile: 
   link: 'https://graph.facebook.com/v2.6/SENDER_ID?access_token='
  page: 
-  token: 'FAGE TOKEN'
+  token: '05b76a4187ee7dc0182f7721d7379a24'
  verify: 
-  token: 'VERIFY TOKEN'
+  token: '1668626560127035'
  message: 
   url: 'https://graph.facebook.com/v2.6/me/messages?access_token='
     

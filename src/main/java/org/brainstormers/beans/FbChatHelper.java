@@ -1,4 +1,4 @@
-package org.brainstormers.fb.utils;
+package org.brainstormers.beans;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.brainstormers.beans.ChaterBean;
 import org.brainstormers.fb.contract.Message;
 import org.brainstormers.fb.contract.Messaging;
 import org.brainstormers.fb.contract.Recipient;
 import org.brainstormers.fb.profile.FbProfile;
-import org.brainstormers.fb.servlet.WebHookServlet;
+import org.brainstormers.servlets.WebHookServlet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -33,11 +31,8 @@ import com.google.gson.Gson;
  */
 @Component
 public class FbChatHelper {
-
-	@Value("{fb.page.token}")
-	private String fbPageToken;
-	@Value("{fb.profile.link}")
-	private String profileLink;
+	private String fbPageToken = "EAAXtm2VhEDsBAMe8fj5gkiieRPJrq3V983EPKXM2vf0rZCcLVz1yszK0v7roteOPwAorYNgNTz85nm6TPCwuElZCfKUEYWxzanqf9xvv4XK9LatnZCyIPHqbDpsyvVd3yZCpNMjkDpZAZB2ENQVGreGGk054NKdy7wg7OhewvdtAZDZD";
+	private String profileLink = "https://graph.facebook.com/v2.6/SENDER_ID?access_token=";
 	@Autowired
 	private ChaterBean chatter;
 
@@ -74,7 +69,7 @@ public class FbChatHelper {
 	 */
 	public List<String> getReplies(final String senderId, final String text) {
 		final List<String> replies = new ArrayList<String>();
-		final String link = StringUtils.replace((profileLink + profileLink), "SENDER_ID", senderId);
+		final String link = StringUtils.replace((profileLink + fbPageToken), "SENDER_ID", senderId);
 		final FbProfile profile = getObjectFromUrl(link, FbProfile.class);
 		final String msg = "Hello " + profile.getFirstName() + ", I've received msg: " + text;
 		System.out.println(msg);

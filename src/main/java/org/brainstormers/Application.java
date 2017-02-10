@@ -7,8 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @SpringBootApplication
+@ComponentScan
 @ServletComponentScan
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -22,5 +26,10 @@ public class Application extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
 		return application.sources(Application.class);
 	}
-	
+
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyConfigIn() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+
 }

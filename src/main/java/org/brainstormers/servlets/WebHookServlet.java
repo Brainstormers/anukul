@@ -1,4 +1,4 @@
-package org.brainstormers.fb.servlet;
+package org.brainstormers.servlets;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
@@ -21,11 +21,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.brainstormers.beans.FbChatHelper;
 import org.brainstormers.fb.contract.FbMsgRequest;
 import org.brainstormers.fb.contract.Messaging;
-import org.brainstormers.fb.utils.FbChatHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.google.gson.Gson;
 
@@ -36,19 +35,16 @@ import com.google.gson.Gson;
  *
  */
 
-@WebServlet(name="WebHookServlet", urlPatterns={"/webhook"})
+@WebServlet(name="WebHookServlet", urlPatterns={"/webhook", "/webhook*", "/webhook/*"})
 public class WebHookServlet extends HttpServlet {
 	private static final long serialVersionUID = -2326475169699351010L;
 
 	@Autowired
 	private FbChatHelper helper;
 
-	@Value("{fb.page.token}")
-	private String fbPageToken;
-	@Value("{fb.verify.token}")
-	private String fbVerifyToken;
-	@Value("{fb.message.url}")
-	private String fbMessageURL;
+	private String fbPageToken = "EAAXtm2VhEDsBAMe8fj5gkiieRPJrq3V983EPKXM2vf0rZCcLVz1yszK0v7roteOPwAorYNgNTz85nm6TPCwuElZCfKUEYWxzanqf9xvv4XK9LatnZCyIPHqbDpsyvVd3yZCpNMjkDpZAZB2ENQVGreGGk054NKdy7wg7OhewvdtAZDZD";
+	private String fbVerifyToken = "1668626560127035";
+	private String fbMessageURL = "https://graph.facebook.com/v2.6/me/messages?access_token=";
 
 	@Override
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
@@ -70,7 +66,7 @@ public class WebHookServlet extends HttpServlet {
 		final String mode = request.getParameter("hub.mode");
 		final String msg = message(queryString, verifyToken, challenge);
 		System.out.println("queryString [" + queryString + "] hub.verify_token = [" + verifyToken
-				+ "] hub.challenge = [" + challenge + "] hub.mode = [" + mode + "]");
+				+ "] hub.challenge = [" + challenge + "] hub.mode = [" + mode + "]" + " fbVerifyToken = ["+fbVerifyToken+"]");
 		response.getWriter().write(msg);
 		response.getWriter().flush();
 		response.getWriter().close();
@@ -96,6 +92,7 @@ public class WebHookServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Request received = [" + jb.toString()+"]");
 		// convert the string request body in java object
 		final FbMsgRequest fbMsgRequest = new Gson().fromJson(jb.toString(), FbMsgRequest.class);
 		if (fbMsgRequest == null) {
@@ -146,8 +143,8 @@ public class WebHookServlet extends HttpServlet {
 				httppost.setEntity(entity);
 				final HttpResponse response = client.execute(httppost);
 				final String result = EntityUtils.toString(response.getEntity());
-				System.out.println(result);
-			} catch (final Exception e) {
+				System.out.println("Result " +result);
+			} catch (final Throwable e) {
 				e.printStackTrace();
 			}
 		}
