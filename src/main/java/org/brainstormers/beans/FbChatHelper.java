@@ -14,8 +14,6 @@ import org.brainstormers.fb.profile.FbProfile;
 import org.brainstormers.servlets.WebHookServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
@@ -30,12 +28,11 @@ import com.google.gson.Gson;
  * @author siddharth
  *
  */
-@Component
 public class FbChatHelper {
 	private static final Logger log = LoggerFactory.getLogger(FbChatHelper.class);
 	private String fbPageToken = "EAAXtm2VhEDsBAMe8fj5gkiieRPJrq3V983EPKXM2vf0rZCcLVz1yszK0v7roteOPwAorYNgNTz85nm6TPCwuElZCfKUEYWxzanqf9xvv4XK9LatnZCyIPHqbDpsyvVd3yZCpNMjkDpZAZB2ENQVGreGGk054NKdy7wg7OhewvdtAZDZD";
 	private String profileLink = "https://graph.facebook.com/v2.6/SENDER_ID?access_token=";
-	@Autowired
+	
 	private ChaterBean chatter;
 
 	public FbChatHelper() {
@@ -139,4 +136,10 @@ public class FbChatHelper {
 		}
 		return null;
 	}
+
+	public void setChatter(ChaterBean chatter) {
+		this.chatter = chatter;
+	}
+	
+	
 }

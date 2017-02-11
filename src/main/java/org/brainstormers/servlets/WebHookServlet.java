@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +25,6 @@ import org.brainstormers.fb.contract.FbMsgRequest;
 import org.brainstormers.fb.contract.Messaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 
@@ -37,11 +35,9 @@ import com.google.gson.Gson;
  *
  */
 
-@WebServlet(name="WebHookServlet", urlPatterns={"/webhook", "/webhook*", "/webhook/*"})
 public class WebHookServlet extends HttpServlet {
 	private static final long serialVersionUID = -2326475169699351010L;
 	private static final Logger log = LoggerFactory.getLogger(WebHookServlet.class);
-	@Autowired
 	private FbChatHelper helper;
 
 	private String fbPageToken = "EAAXtm2VhEDsBAMe8fj5gkiieRPJrq3V983EPKXM2vf0rZCcLVz1yszK0v7roteOPwAorYNgNTz85nm6TPCwuElZCfKUEYWxzanqf9xvv4XK9LatnZCyIPHqbDpsyvVd3yZCpNMjkDpZAZB2ENQVGreGGk054NKdy7wg7OhewvdtAZDZD";
@@ -165,4 +161,10 @@ public class WebHookServlet extends HttpServlet {
 	public void init() throws ServletException {
 		log.error("webhook servlet created!!");
 	}
+
+	public void setHelper(final FbChatHelper helper) {
+		this.helper = helper;
+	}
+	
+	
 }

@@ -1,7 +1,5 @@
 package org.brainstormers.beans;
 
-import javax.annotation.PostConstruct;
-
 import org.brainstormers.bots.Bot;
 import org.brainstormers.bots.GraphMaster;
 import org.brainstormers.chats.Chat;
@@ -9,12 +7,9 @@ import org.brainstormers.utils.ClassPathUtils;
 import org.brainstormers.utils.MagicBooleans;
 import org.brainstormers.utils.MagicStrings;
 import org.brainstormers.utils.UnZipUtils;
-import org.springframework.stereotype.Component;
-@Component
 public class ChaterBean {
 	public Chat chatSession;
 
-	@PostConstruct
 	public void postConstruct() {
 		String path = System.getProperty("java.io.tmpdir")+"/anukul";
 		String zip = ClassPathUtils.getInstance().getPath("anukul-aiml.zip");

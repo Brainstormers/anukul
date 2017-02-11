@@ -54,4 +54,9 @@ public class ChatAPIController {
 		}
 		return new ResponseEntity<Response>(HttpStatus.NOT_FOUND);
 	}
+
+	public void setChatter(ChaterBean chatter) {
+		this.chatter = chatter;
+	}
+	
 }
