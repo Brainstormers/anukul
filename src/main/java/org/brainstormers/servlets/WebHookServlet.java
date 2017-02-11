@@ -24,6 +24,8 @@ import org.apache.http.util.EntityUtils;
 import org.brainstormers.beans.FbChatHelper;
 import org.brainstormers.fb.contract.FbMsgRequest;
 import org.brainstormers.fb.contract.Messaging;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
@@ -38,7 +40,7 @@ import com.google.gson.Gson;
 @WebServlet(name="WebHookServlet", urlPatterns={"/webhook", "/webhook*", "/webhook/*"})
 public class WebHookServlet extends HttpServlet {
 	private static final long serialVersionUID = -2326475169699351010L;
-
+	private static final Logger log = LoggerFactory.getLogger(WebHookServlet.class);
 	@Autowired
 	private FbChatHelper helper;
 
@@ -65,7 +67,7 @@ public class WebHookServlet extends HttpServlet {
 		final String challenge = request.getParameter("hub.challenge");
 		final String mode = request.getParameter("hub.mode");
 		final String msg = message(queryString, verifyToken, challenge);
-		System.out.println("queryString [" + queryString + "] hub.verify_token = [" + verifyToken
+		log.error("queryString [" + queryString + "] hub.verify_token = [" + verifyToken
 				+ "] hub.challenge = [" + challenge + "] hub.mode = [" + mode + "]" + " fbVerifyToken = ["+fbVerifyToken+"]");
 		response.getWriter().write(msg);
 		response.getWriter().flush();
@@ -92,19 +94,19 @@ public class WebHookServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Request received = [" + jb.toString()+"]");
+		log.error("Request received = [" + jb.toString()+"]");
 		// convert the string request body in java object
 		final FbMsgRequest fbMsgRequest = new Gson().fromJson(jb.toString(), FbMsgRequest.class);
 		if (fbMsgRequest == null) {
-			System.out.println("fbMsgRequest was null");
+			log.error("fbMsgRequest was null");
 			return;
 		}
 		if (CollectionUtils.isEmpty(fbMsgRequest.getEntry())) {
-			System.out.println("fbMsgRequest.getEntry() was null or empty");
+			log.error("fbMsgRequest.getEntry() was null or empty");
 			return;
 		}
 		if (CollectionUtils.isEmpty(fbMsgRequest.getEntry().get(0).getMessaging())) {
-			System.out.println("fbMsgRequest.getEntry().get(0).getMessaging() was null");
+			log.error("fbMsgRequest.getEntry().get(0).getMessaging() was null");
 			return;
 		}
 		final List<Messaging> messagings = fbMsgRequest.getEntry().get(0).getMessaging();
@@ -112,11 +114,11 @@ public class WebHookServlet extends HttpServlet {
 			final String sender = event.getSender().getId();
 			if (event.getMessage() != null && event.getMessage().getText() != null) {
 				final String text = event.getMessage().getText();
-				System.out.println("message received: " + text);
+				log.error("message received: " + text);
 				sendTextMessage(sender, text, false);
 			} else if (event.getPostback() != null) {
 				final String text = event.getPostback().getPayload();
-				System.out.println("postback received: " + text);
+				log.error("postback received: " + text);
 				sendTextMessage(sender, text, true);
 			}
 		}
@@ -143,7 +145,7 @@ public class WebHookServlet extends HttpServlet {
 				httppost.setEntity(entity);
 				final HttpResponse response = client.execute(httppost);
 				final String result = EntityUtils.toString(response.getEntity());
-				System.out.println("Result " +result);
+				log.error("Result " +result);
 			} catch (final Throwable e) {
 				e.printStackTrace();
 			}
@@ -156,11 +158,11 @@ public class WebHookServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		System.out.println("webhook Servlet Destroyed");
+		log.error("webhook Servlet Destroyed");
 	}
 
 	@Override
 	public void init() throws ServletException {
-		System.out.println("webhook servlet created!!");
+		log.error("webhook servlet created!!");
 	}
 }

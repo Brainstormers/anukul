@@ -1,7 +1,6 @@
 package org.brainstormers.beans;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,6 +12,8 @@ import org.brainstormers.fb.contract.Messaging;
 import org.brainstormers.fb.contract.Recipient;
 import org.brainstormers.fb.profile.FbProfile;
 import org.brainstormers.servlets.WebHookServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ import com.google.gson.Gson;
  */
 @Component
 public class FbChatHelper {
+	private static final Logger log = LoggerFactory.getLogger(FbChatHelper.class);
 	private String fbPageToken = "EAAXtm2VhEDsBAMe8fj5gkiieRPJrq3V983EPKXM2vf0rZCcLVz1yszK0v7roteOPwAorYNgNTz85nm6TPCwuElZCfKUEYWxzanqf9xvv4XK9LatnZCyIPHqbDpsyvVd3yZCpNMjkDpZAZB2ENQVGreGGk054NKdy7wg7OhewvdtAZDZD";
 	private String profileLink = "https://graph.facebook.com/v2.6/SENDER_ID?access_token=";
 	@Autowired
@@ -48,15 +50,9 @@ public class FbChatHelper {
 	 * @return
 	 */
 	public List<String> getPostBackReplies(final String senderId, final String text) {
-		final List<String> postbackReplies = new ArrayList<String>();
 		final String msg = "received postback msg: " + text;
-		System.out.println(msg);
-		final String res = chatter.respond(text);
-		System.out.println(res);
-		final Message fbMsg = getMsg(res);
-		final String fbReply = getJsonReply(senderId, fbMsg);
-		postbackReplies.add(fbReply);
-		return postbackReplies;
+		log.error(msg);
+		return reply(senderId, text);
 	}
 
 	/**
@@ -68,16 +64,25 @@ public class FbChatHelper {
 	 * @return
 	 */
 	public List<String> getReplies(final String senderId, final String text) {
-		final List<String> replies = new ArrayList<String>();
 		final String link = StringUtils.replace((profileLink + fbPageToken), "SENDER_ID", senderId);
 		final FbProfile profile = getObjectFromUrl(link, FbProfile.class);
 		final String msg = "Hello " + profile.getFirstName() + ", I've received msg: " + text;
-		System.out.println(msg);
+		log.error(msg);
+		return reply(senderId, text);
+	}
+
+	private List<String> reply(final String senderId, final String text) {
+		final List<String> replies = new ArrayList<String>();
 		final String res = chatter.respond(text);
-		System.out.println(res);
-		final Message fbMsg = getMsg(res);
-		final String fbReply = getJsonReply(senderId, fbMsg);
-		replies.add(fbReply);
+		log.error("Response: " +res);
+		if(res != null) {
+			final String[] arrays = res.split("(?<=\\G.{640})");
+			for (final String string : arrays) {
+				final Message fbMsg = getMsg(string);
+				final String fbReply = getJsonReply(senderId, fbMsg);
+				replies.add(fbReply);
+			}
+		}
 		return replies;
 	}
 
@@ -124,7 +129,7 @@ public class FbChatHelper {
 				jb.append(inputLine);
 			}
 			in.close();
-		} catch (IOException e) {
+		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
